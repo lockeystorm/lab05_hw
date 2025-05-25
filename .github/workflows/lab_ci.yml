@@ -20,7 +20,7 @@ jobs:
                 cmake --build build
                 
             - name: Run tests
-              run: build/tests0
+              run: build/test0
               
             - name: Coverage
               run: lcov -c -d build/CMakeFiles/banking.dir/banking/ --include *.cpp --output-file ./coverage/lcov.info
