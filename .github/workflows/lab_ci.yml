@@ -1,0 +1,36 @@
+name: Banking build
+on: push
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            
+            - name: Add GTests
+              run: git clone https://github.com/google/googletest.git third-party/gtest
+            
+            - name: Install tools
+              run: |
+                sudo apt-get update && sudo apt-get install -y lcov
+                
+            - name: Configure & Build
+              run: |
+                rm -rf build
+                cmake -H. -B build -DBUILD_TESTS=ON -DCMAKE_CXX_FLAGS='--coverage'
+                cmake --build build
+                
+            - name: Run tests
+              run: build/tests0
+              
+            - name: Coverage
+              run: lcov -c -d build/CMakeFiles/banking.dir/banking/ --include *.cpp --output-file ./coverage/lcov.info
+            
+            - name: Upload to Coveralls
+              uses: coverallsapp/github-action@v2
+              with:
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+                path-to-lcov: coverage/lcov.info
+
+
+
+        
