@@ -64,7 +64,7 @@ TEST(Transaction, IncorrectTransaction){
 
 TEST(Transaction, CorrectTransaction){
     Transaction t;
-    Account acc1(0, 2200);
+    Account acc1(0, 2201);
     Account acc2(1, 1800);
     
     EXPECT_TRUE(t.Make(acc1, acc2, 200));
