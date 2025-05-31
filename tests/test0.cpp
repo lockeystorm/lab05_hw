@@ -59,6 +59,8 @@ TEST(Transaction, TransactionCallsAccountMethodsCorrectly){
     EXPECT_CALL(acc2, ChangeBalance(200)).Times(1);
     EXPECT_CALL(acc1, Unlock()).Times(1);
     EXPECT_CALL(acc2, Unlock()).Times(1);
+    EXPECT_CALL(acc1, GetBalance()).WillOnce(::testing::Return(2000));
+    EXPECT_CALL(acc2, GetBalance()).WillOnce(::testing::Return(2000));
 
     EXPECT_TRUE(t.Make(acc1, acc2, 200));
 }
