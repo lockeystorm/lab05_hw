@@ -25,12 +25,21 @@ jobs:
             - name: Coverage
               run: lcov -c -d build/CMakeFiles/banking.dir/banking/ --include *.cpp --output-file ./coverage/lcov.info
             
+            - name: Upload coverage artifact
+              uses: actions/upload-artifact@v3
+              with:
+                name: coverage-data
+                path: coverage/lcov.info
+            
+            - name: Download coverage artifact
+              uses: actions/download-artifact@v3
+              with:
+                name: coverage-data
+                path: coverage
+            
             - name: Upload to Coveralls
               uses: coverallsapp/github-action@v2
               with:
                 github-token: ${{ secrets.GITHUB_TOKEN }}
                 path-to-lcov: coverage/lcov.info
 
-
-
-        
