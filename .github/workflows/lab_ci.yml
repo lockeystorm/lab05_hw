@@ -23,16 +23,16 @@ jobs:
               run: build/test0
               
             - name: Coverage
-              run: lcov -c -d build/CMakeFiles/banking.dir/banking/ --include *.cpp --output-file ./coverage/lcov.info
+              run: lcov -c -d build/CMakeFiles/banking.dir/banking/ --include '*.cpp' --output-file coverage/lcov.info
             
             - name: Upload coverage artifact
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                 name: coverage-data
                 path: coverage/lcov.info
             
             - name: Download coverage artifact
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
                 name: coverage-data
                 path: coverage
