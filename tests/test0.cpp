@@ -72,14 +72,14 @@ TEST(Transaction, NotEnoughFunds){
     
     EXPECT_CALL(acc1, Lock()).Times(1);
     EXPECT_CALL(acc2, Lock()).Times(1);
-    
     EXPECT_CALL(acc2, ChangeBalance(2000)).Times(1);
-    EXPECT_CALL(acc1, GetBalance()).WillOnce(::testing::Return(1000));
+    EXPECT_CALL(acc1, GetBalance()).WillRepeatedly(::testing::Return(1000));
+    EXPECT_CALL(acc2, GetBalance()).WillOnce(::testing::Return(200));
     EXPECT_CALL(acc1, ChangeBalance(-2001)).Times(0); // не должно быть вызова ChangeBalance, недостаточно средств
     EXPECT_CALL(acc2, ChangeBalance(-2000)).Times(1);
-    
     EXPECT_CALL(acc1, Unlock()).Times(1);
     EXPECT_CALL(acc2, Unlock()).Times(1);
+    
     
     EXPECT_FALSE(t.Make(acc1, acc2, 2000));
 }
